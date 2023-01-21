@@ -1,14 +1,20 @@
 const fn = require("./fn");
 
-test("1 더하기 1은 2야.", () => {
-  expect(fn.add(1, 1)).toBe(2);
+const mockFn = jest.fn();
+
+mockFn(10, 20);
+mockFn();
+mockFn(30, 40);
+
+test("한 번 이상 호출?", () => {
+  expect(mockFn).toBeCalled();
 });
-test("2 더하기 2는 4야.", () => {
-  expect(fn.add(2, 2)).toBe(4);
+test("정확히 세 번 호출?", () => {
+  expect(mockFn).toBeCalledTimes(3);
 });
-test.skip("3 더하기 3은 6이야.", () => {
-  expect(fn.add(3, 3)).toBe(6);
+test("10이랑 20 전달받은 함수가 있는가?", () => {
+  expect(mockFn).toBeCalledWith(10, 20);
 });
-test("4 더하기 4은 8이야.", () => {
-  expect(fn.add(4, 4)).toBe(8);
+test("마지막 함수는 30이랑 40을 받았는가?", () => {
+  expect(mockFn).lastCalledWith(30, 40);
 });
